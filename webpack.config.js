@@ -45,7 +45,7 @@ const cssLoader = (extra) => {
 
   return loaders;
 }
-
+/* функция для заполнения массива плгинов */
 const plugins = () => {
   
   const base = [
@@ -74,6 +74,7 @@ const plugins = () => {
 }
 
 module.exports = {
+  /* опция контекст указывает на дирикторю в которо мы совершаем манипуляции, позволяя не указавать ее в пути */
   context: path.resolve(__dirname, 'src'),
   entry: {
     main: ['@babel/polyfill', './index.js']
