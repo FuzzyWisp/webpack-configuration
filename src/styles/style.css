@@ -1,0 +1,19 @@
+@import './fonts.css';
+
+body{
+    font-family: 'OpenSans', sans-serif;
+}
+.container{
+    background-color: #aaa;
+    padding-top: 2rem;
+    margin: auto;
+
+}
+h1{
+    text-align: center;
+    font-size: 40px;
+}
+.fox{
+    height: 200px;
+    background-image: url(../assets/fox.png);
+}
