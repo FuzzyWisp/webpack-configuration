@@ -1,14 +1,16 @@
+const fs = require('fs');
 const path = require('path');
 const HTMLWedPackPlugin = require('html-webpack-plugin');
-const {CleanWebpackPlugin} = require('clean-webpack-plugin');
 const CopyWebpackPlugin = require('copy-webpack-plugin');
-const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
 const TerserWebpackPlugin = require('terser-webpack-plugin');
+const {CleanWebpackPlugin} = require('clean-webpack-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
+const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
+const pages = fs.readdirSync(path.resolve(__dirname, 'src/pages')).filter(fileName => fileName.endsWith('.html'));
 
 /* постоянная оптимизации продакшен сборки */
 const prodOptimizer = () => {
@@ -50,21 +52,27 @@ const plugins = () => {
   
   const base = [
     new HTMLWedPackPlugin({
-      template: './index.pug',
+      template: './pages/index.pug',
+						filename: './index.html',
+						inject: false,
       minify:{
         collapseWhitespace: isProd
       }
     }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      {
-        from: path.resolve(__dirname, 'src/static'),
-        to: path.resolve(__dirname, 'dist')
-      }
+      { from: path.resolve(__dirname, 'src/static'),to: path.resolve(__dirname, 'dist') },
+      { from: path.resolve(__dirname, 'src/pages'), test: /\.pug$/, to: path.resolve(__dirname, "dist") }
     ]),
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css'
-    })
+    }),    
+    ...pages.map(page => new HtmlWebpackPlugin(
+      {
+        template: page,
+        filename: page
+      }
+    ))
   ]
   // if (isProd) {
   //   base.push(new BundleAnalyzerPlugin());
