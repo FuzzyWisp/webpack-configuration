@@ -10,7 +10,7 @@ const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
 
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
-const pages = fs.readdirSync(path.resolve(__dirname, 'src/pages')).filter(fileName => fileName.endsWith('.html'));
+const pages = fs.readdirSync(path.resolve(__dirname, 'src/pages')).filter(fileName => fileName.endsWith('.pug'));
 
 /* постоянная оптимизации продакшен сборки */
 const prodOptimizer = () => {
@@ -54,7 +54,7 @@ const plugins = () => {
     new HTMLWedPackPlugin({
       template: './pages/index.pug',
 						filename: './index.html',
-						inject: false,
+						inject: true,
       minify:{
         collapseWhitespace: isProd
       }
@@ -62,15 +62,15 @@ const plugins = () => {
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'src/static'),to: path.resolve(__dirname, 'dist') },
-      { from: path.resolve(__dirname, 'src/pages'), test: /\.pug$/, to: path.resolve(__dirname, "dist") }
+      //{ from: path.resolve(__dirname, 'src/pages'), test: /\.pug$/, to: path.resolve(__dirname, "dist") }
     ]),
     new MiniCssExtractPlugin({
       filename: '[name].[hash].css'
     }),    
-    ...pages.map(page => new HtmlWebpackPlugin(
+    ...pages.map(page => new HTMLWedPackPlugin(
       {
-        template: page,
-        filename: page
+        template: path.resolve(__dirname, 'src/pages/', page),
+        filename: page.replace(/\.pug$/, '.html')
       }
     ))
   ]
