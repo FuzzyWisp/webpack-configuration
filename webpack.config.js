@@ -8,8 +8,10 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 const {BundleAnalyzerPlugin} = require('webpack-bundle-analyzer');
 const OptimizeCssAssetPlugin = require('optimize-css-assets-webpack-plugin');
 
+/* Переменная, хранящая информацию о том, в каком режиме происходит сборка */
 const isDev = process.env.NODE_ENV === 'development';
 const isProd = !isDev;
+/* массив, в котором хранятся имена файлов страниц. Генерируетсся с помощью функции */
 const pages = fs.readdirSync(path.resolve(__dirname, 'src/pages')).filter(fileName => fileName.endsWith('.pug'));
 
 /* постоянная оптимизации продакшен сборки */
@@ -27,7 +29,6 @@ const prodOptimizer = () => {
   }
   return config;
 }
-
 /* функция для объявления лоадеров */
 const cssLoader = (extra) => {
   const loaders = [
@@ -88,7 +89,7 @@ module.exports = {
     main: ['@babel/polyfill', './index.js']
   },
   output: {
-    filename: '[name].[hash].js',                     // [name] берет имя от имени чанка входной чанка(main)
+    filename: '[name].[hash].js',                     // [name] берет имя от имени чанка входной точки(main)
     path: path.resolve(__dirname, 'dist')
   },
   /*     Объект resolve - настройка для упрошения работы с Webpack      */
@@ -158,7 +159,7 @@ module.exports = {
         use: ['file-loader']
       },
       {
-        test: /\.(woff(2)?|ttf|eot|svg)(\?v=\d+\.\d+\.\d+)?$/,
+        test: /\.(woff(2)?|ttf|eot|svg|otf)(\?v=\d+\.\d+\.\d+)?$/,
         use: ['file-loader']
       }
     ]
