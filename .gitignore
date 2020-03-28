@@ -5,5 +5,5 @@
 node_modules
 
 # Dist & test
-dist
 src
+dist

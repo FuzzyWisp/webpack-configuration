@@ -1,4 +1,4 @@
-import '@src/logo/logo.scss'
+import './logo/logo.scss'
 //import '@src/styles/test.scss'
 
 function plus(a, b){

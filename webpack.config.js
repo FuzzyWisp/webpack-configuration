@@ -52,14 +52,6 @@ const cssLoader = (extra) => {
 const plugins = () => {
   
   const base = [
-    new HTMLWedPackPlugin({
-      template: './pages/index.pug',
-						filename: './index.html',
-						inject: true,
-      minify:{
-        collapseWhitespace: isProd
-      }
-    }),
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
       { from: path.resolve(__dirname, 'src/static'),to: path.resolve(__dirname, 'dist') },
@@ -71,7 +63,11 @@ const plugins = () => {
     ...pages.map(page => new HTMLWedPackPlugin(
       {
         template: path.resolve(__dirname, 'src/pages/', page),
-        filename: page.replace(/\.pug$/, '.html')
+        filename: page.replace(/\.pug$/, '.html'),
+        inject: true,
+        minify:{
+          collapseWhitespace: isProd
+        }
       }
     ))
   ]
