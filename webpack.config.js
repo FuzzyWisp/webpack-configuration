@@ -54,7 +54,8 @@ const plugins = () => {
   const base = [
     new CleanWebpackPlugin(),
     new CopyWebpackPlugin([
-      { from: path.resolve(__dirname, 'src/static'),to: path.resolve(__dirname, 'dist') },
+      { from: path.resolve(__dirname, 'src/static'),to: path.resolve(__dirname, 'dist/static') },
+      // { from: path.resolve(__dirname, 'src/static/img'), to: path.resolve(__dirname, 'dist/static/img'), test: /\.(png|jpg|gif|svg)$/ },
       //{ from: path.resolve(__dirname, 'src/pages'), test: /\.pug$/, to: path.resolve(__dirname, "dist") }
     ]),
     new MiniCssExtractPlugin({
@@ -110,8 +111,13 @@ module.exports = {
   */
   optimization: prodOptimizer(),
   devServer: {
+    index: 'color-and-types.html',
     port: 9000,
-    hot: isDev
+    hot: isDev,
+    overlay: {
+      warnings: true,
+      errors: true
+    }
   },
   devtool: isDev ? 'source-map' : '',
   
