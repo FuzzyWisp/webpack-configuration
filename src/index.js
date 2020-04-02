@@ -1,4 +1,5 @@
 import './logo/logo.scss'
+import './styles/main.scss'
 //import '@src/static/img/logo.svg'
 //import '@src/styles/test.scss'
 
