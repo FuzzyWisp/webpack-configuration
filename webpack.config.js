@@ -111,7 +111,7 @@ module.exports = {
   */
   optimization: prodOptimizer(),
   devServer: {
-    index: 'color-and-types.html',
+    index: 'form-elements.html',
     port: 9000,
     hot: isDev,
     overlay: {
