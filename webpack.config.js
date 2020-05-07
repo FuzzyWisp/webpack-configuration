@@ -14,7 +14,7 @@ const isProd = !isDev;
 /* массив, в котором хранятся имена файлов страниц. Генерируетсся с помощью функции */
 const pages = fs.readdirSync(path.resolve(__dirname, 'src/pages')).filter(fileName => fileName.endsWith('.pug'));
 
-/* постоянная оптимизации продакшен сборки */
+/* постоянная функции оптимизации продакшен сборки */
 const prodOptimizer = () => {
   const config = {
     splitChunks:{
